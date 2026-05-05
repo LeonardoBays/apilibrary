@@ -1,5 +1,7 @@
 package br.leo.library.service
 
+import br.leo.library.dto.LoginRequestDTO
+import br.leo.library.dto.LoginResponseDTO
 import br.leo.library.dto.UserRegistrationDTO
 import br.leo.library.dto.UserResponseDTO
 import br.leo.library.dto.UserUpdateDTO
@@ -9,6 +11,7 @@ import br.leo.library.exceptions.InvalidPasswordException
 import br.leo.library.exceptions.PasswordMismatchException
 import br.leo.library.exceptions.UserNotFoundException
 import br.leo.library.repository.UserRepository
+import br.leo.library.security.JwtProvider
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,10 +22,31 @@ import java.time.format.DateTimeFormatter
 @Transactional
 class UserService(
     private val userRepository: UserRepository,
-    private val passwordEncoder: PasswordEncoder
+    private val passwordEncoder: PasswordEncoder,
+    private val jwtProvider: JwtProvider
 ) {
 
     private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
+    fun loginUser(request: LoginRequestDTO): LoginResponseDTO {
+        val normalizedEmail = request.email.lowercase().trim()
+
+        val user = userRepository.findByEmail(normalizedEmail)
+            .orElseThrow { UserNotFoundException("User with email $normalizedEmail not found") }
+
+        if (!passwordEncoder.matches(request.password, user.password)) {
+            throw InvalidPasswordException("Invalid credentials")
+        }
+
+        val token = jwtProvider.generateToken(user.email, user.id)
+
+        return LoginResponseDTO(
+            token = token,
+            userId = user.id,
+            email = user.email,
+            name = user.name
+        )
+    }
 
     fun registerUser(request: UserRegistrationDTO): UserResponseDTO {
         if (request.password != request.passwordConfirmation) {

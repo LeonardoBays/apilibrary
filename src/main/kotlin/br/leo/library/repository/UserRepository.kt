@@ -10,5 +10,8 @@ import java.util.*
 interface UserRepository : JpaRepository<User, Long> {
     @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM User u WHERE LOWER(u.email) = LOWER(:email)")
     fun existsByEmail(email: String): Boolean
+
+    @Query("SELECT u FROM User u WHERE LOWER(u.email) = LOWER(:email)")
+    fun findByEmail(email: String): Optional<User>
 }
 

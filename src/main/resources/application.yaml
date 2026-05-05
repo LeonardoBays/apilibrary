@@ -18,3 +18,9 @@ spring:
 server:
   port: 8080
 
+jwt:
+  # This is a Base64-encoded 512-bit (64-byte) secret key. Generate your own with:
+  # openssl rand -base64 64
+  # For production, use environment variables instead of hardcoding
+  secret: n5r8q2mP9xK3vL7dJ5gB8wS1tU4yH6cF0eA2bM4nO5pR7sT9uV1wX3yZ5aCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKl
+  expiration: 86400000

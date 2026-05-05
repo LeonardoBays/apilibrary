@@ -1,5 +1,7 @@
 package br.leo.library.controller
 
+import br.leo.library.dto.LoginRequestDTO
+import br.leo.library.dto.LoginResponseDTO
 import br.leo.library.dto.UserRegistrationDTO
 import br.leo.library.dto.UserResponseDTO
 import br.leo.library.dto.UserUpdateDTO
@@ -17,6 +19,13 @@ import org.springframework.web.bind.annotation.*
 class UserController(
     private val userService: UserService
 ) {
+
+    @PostMapping("/login")
+    @Operation(summary = "User login", description = "Authenticate user and get JWT token")
+    fun loginUser(@Valid @RequestBody request: LoginRequestDTO): ResponseEntity<LoginResponseDTO> {
+        val loginResponse = userService.loginUser(request)
+        return ResponseEntity.ok(loginResponse)
+    }
 
     @PostMapping("/register")
     @Operation(summary = "Register a new user", description = "Create a new user with email and password")
