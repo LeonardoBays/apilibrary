@@ -19,6 +19,9 @@ class Book(
     @Column(nullable = false)
     var publisher: String,
 
+    @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT ''")
+    var author: String = "",
+
     @Column(name = "created_at", nullable = false, updatable = false)
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
@@ -29,7 +32,7 @@ class Book(
     var active: Boolean = true
 ) {
     constructor() : this(
-        0, "", "", "", LocalDateTime.now(), LocalDateTime.now(), true
+        0, "", "", "", "", LocalDateTime.now(), LocalDateTime.now(), true
     )
 }
 

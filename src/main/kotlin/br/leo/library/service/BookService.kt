@@ -30,7 +30,8 @@ class BookService(
         val book = Book(
             title = normalizedTitle,
             description = request.description.trim(),
-            publisher = request.publisher.trim()
+            publisher = request.publisher.trim(),
+            author = request.author.trim()
         )
 
         val savedBook = bookRepository.save(book)
@@ -71,6 +72,7 @@ class BookService(
         book.title = normalizedTitle
         book.description = request.description.trim()
         book.publisher = request.publisher.trim()
+        book.author = request.author.trim()
         book.updatedAt = LocalDateTime.now()
 
         val updatedBook = bookRepository.save(book)
@@ -90,6 +92,7 @@ class BookService(
             title = book.title,
             description = book.description,
             publisher = book.publisher,
+            author = book.author,
             createdAt = book.createdAt.format(dateFormatter),
             updatedAt = book.updatedAt.format(dateFormatter),
             active = book.active
