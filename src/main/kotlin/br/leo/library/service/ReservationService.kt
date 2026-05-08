@@ -147,7 +147,7 @@ class ReservationService(
             userName = reservation.user.name,
             bookId = reservation.book.id,
             bookTitle = reservation.book.title,
-            bookAuthor = reservation.book.author,
+            bookAuthor = reservation.book.author.name,
             status = reservation.status.name,
             reservedAt = reservation.reservedAt.format(dateFormatter),
             expiresAt = reservation.expiresAt?.format(dateFormatter),

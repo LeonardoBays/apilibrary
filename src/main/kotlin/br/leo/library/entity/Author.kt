@@ -1,28 +1,24 @@
 package br.leo.library.entity
 
 import jakarta.persistence.*
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "books")
-class Book(
+@Table(name = "authors")
+class Author(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
+    @Column(nullable = false, unique = true)
+    var name: String,
+
     @Column(nullable = false)
-    var title: String,
+    var birthDate: LocalDate,
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    var description: String,
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "publisher_id", nullable = false)
-    var publisher: Publisher,
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "author_id", nullable = false)
-    var author: Author,
+    var biography: String,
 
     @Column(name = "created_at", nullable = false, updatable = false)
     val createdAt: LocalDateTime = LocalDateTime.now(),
@@ -31,10 +27,13 @@ class Book(
     var updatedAt: LocalDateTime = LocalDateTime.now(),
 
     @Column(nullable = false)
-    var active: Boolean = true
+    var active: Boolean = true,
+
+    @OneToMany(mappedBy = "author", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    val books: MutableList<Book> = mutableListOf()
 ) {
     constructor() : this(
-        0, "", "", Publisher(), Author(), LocalDateTime.now(), LocalDateTime.now(), true
+        0, "", LocalDate.now(), "", LocalDateTime.now(), LocalDateTime.now(), true, mutableListOf()
     )
 }
 

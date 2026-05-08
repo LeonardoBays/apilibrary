@@ -1,0 +1,238 @@
+{
+  "info": {
+    "_postman_id": "author-collection",
+    "name": "Author API",
+    "description": "Collection for Author Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Author",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"George Orwell\",\n  \"birthDate\": \"1903-06-25\",\n  \"biography\": \"Eric Arthur Blair, known by his pen name George Orwell, was an English novelist, journalist and critic. His work is marked by keen intelligence and wit, deft use of satire, and prophetic socialist or left-leaning viewpoints. He wrote literary works in and out of the novel form, including the enduring dystopian novel 1984.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/authors",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "authors"
+          ]
+        },
+        "description": "Create a new author with name, birth date, and biography"
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Authors",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/authors",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "authors"
+          ]
+        },
+        "description": "Retrieve all authors (including inactive)"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Active Authors",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/authors/active",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "authors",
+            "active"
+          ]
+        },
+        "description": "Retrieve only active authors"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Author by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/authors/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "authors",
+            "1"
+          ]
+        },
+        "description": "Retrieve a specific author by their ID"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Author",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"George Orwell\",\n  \"birthDate\": \"1903-06-25\",\n  \"biography\": \"Eric Arthur Blair, known by his pen name George Orwell, was an renowned English novelist and journalist. His most famous works include 1984 and Animal Farm, which have become cornerstones of dystopian fiction literature.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/authors/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "authors",
+            "1"
+          ]
+        },
+        "description": "Update an existing author's information"
+      },
+      "response": []
+    },
+    {
+      "name": "Deactivate Author",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/authors/1/deactivate",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "authors",
+            "1",
+            "deactivate"
+          ]
+        },
+        "description": "Deactivate an author (soft delete)"
+      },
+      "response": []
+    },
+    {
+      "name": "Reactivate Author",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/authors/1/reactivate",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "authors",
+            "1",
+            "reactivate"
+          ]
+        },
+        "description": "Reactivate a previously deactivated author"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Author",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/authors/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "authors",
+            "1"
+          ]
+        },
+        "description": "Permanently delete an author from the database"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

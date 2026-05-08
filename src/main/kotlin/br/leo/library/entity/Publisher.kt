@@ -4,25 +4,20 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "books")
-class Book(
+@Table(name = "publishers")
+class Publisher(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    @Column(nullable = false)
-    var title: String,
+    @Column(nullable = false, unique = true)
+    var name: String,
 
     @Column(nullable = false, columnDefinition = "TEXT")
     var description: String,
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "publisher_id", nullable = false)
-    var publisher: Publisher,
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "author_id", nullable = false)
-    var author: Author,
+    @Column(nullable = false)
+    var website: String,
 
     @Column(name = "created_at", nullable = false, updatable = false)
     val createdAt: LocalDateTime = LocalDateTime.now(),
@@ -31,10 +26,13 @@ class Book(
     var updatedAt: LocalDateTime = LocalDateTime.now(),
 
     @Column(nullable = false)
-    var active: Boolean = true
+    var active: Boolean = true,
+
+    @OneToMany(mappedBy = "publisher", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    val books: MutableList<Book> = mutableListOf()
 ) {
     constructor() : this(
-        0, "", "", Publisher(), Author(), LocalDateTime.now(), LocalDateTime.now(), true
+        0, "", "", "", LocalDateTime.now(), LocalDateTime.now(), true, mutableListOf()
     )
 }
 

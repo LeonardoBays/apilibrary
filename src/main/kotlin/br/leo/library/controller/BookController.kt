@@ -39,10 +39,20 @@ class BookController(
         return ResponseEntity.ok(bookResponse)
     }
 
-    @GetMapping("/publisher/{publisher}")
-    @Operation(summary = "Get books by publisher", description = "Retrieve all books from a specific publisher")
-    fun getBooksByPublisher(@PathVariable publisher: String): ResponseEntity<List<BookResponseDTO>> {
-        val books = bookService.getBooksByPublisher(publisher)
+    @GetMapping("/publisher/{publisherId}")
+    @Operation(summary = "Get books by publisher", description = "Retrieve all books from a specific publisher by publisher ID")
+    fun getBooksByPublisher(@PathVariable publisherId: Long): ResponseEntity<List<BookResponseDTO>> {
+        val books = bookService.getBooksByPublisher(publisherId)
+        return ResponseEntity.ok(books)
+    }
+
+    @GetMapping("/search")
+    @Operation(summary = "Search books", description = "Search for books by title, description, author name, or publisher name. Sort results in ascending or descending order.")
+    fun searchBooks(
+        @RequestParam keyword: String,
+        @RequestParam(defaultValue = "asc") sortOrder: String
+    ): ResponseEntity<List<BookResponseDTO>> {
+        val books = bookService.searchBooks(keyword, sortOrder)
         return ResponseEntity.ok(books)
     }
 

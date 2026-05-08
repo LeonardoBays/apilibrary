@@ -29,6 +29,10 @@ class WebSecurityConfig(
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/books/**").permitAll()
                     .requestMatchers("/api/books/**").authenticated()
+                    .requestMatchers(HttpMethod.GET, "/api/publishers/**").permitAll()
+                    .requestMatchers("/api/publishers/**").authenticated()
+                    .requestMatchers(HttpMethod.GET, "/api/authors/**").permitAll()
+                    .requestMatchers("/api/authors/**").authenticated()
                     .anyRequest().authenticated()
             }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)

@@ -12,13 +12,9 @@ data class BookCreateDTO(
     @field:Size(min = 10, max = 5000, message = "Description must be between 10 and 5000 characters")
     val description: String,
 
-    @field:NotBlank(message = "Publisher is required")
-    @field:Size(min = 1, max = 100, message = "Publisher must be between 1 and 100 characters")
-    val publisher: String,
+    val publisherId: Long,
 
-    @field:NotBlank(message = "Author is required")
-    @field:Size(min = 1, max = 100, message = "Author must be between 1 and 100 characters")
-    val author: String
+    val authorId: Long
 )
 
 data class BookUpdateDTO(
@@ -30,21 +26,17 @@ data class BookUpdateDTO(
     @field:Size(min = 10, max = 5000, message = "Description must be between 10 and 5000 characters")
     val description: String,
 
-    @field:NotBlank(message = "Publisher is required")
-    @field:Size(min = 1, max = 100, message = "Publisher must be between 1 and 100 characters")
-    val publisher: String,
+    val publisherId: Long,
 
-    @field:NotBlank(message = "Author is required")
-    @field:Size(min = 1, max = 100, message = "Author must be between 1 and 100 characters")
-    val author: String
+    val authorId: Long
 )
 
 data class BookResponseDTO(
     val id: Long,
     val title: String,
     val description: String,
-    val publisher: String,
-    val author: String,
+    val publisher: PublisherResponseDTO,
+    val author: AuthorResponseDTO,
     val createdAt: String,
     val updatedAt: String,
     val active: Boolean
