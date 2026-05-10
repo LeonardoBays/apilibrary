@@ -24,3 +24,4 @@ jwt:
   # For production, use environment variables instead of hardcoding
   secret: n5r8q2mP9xK3vL7dJ5gB8wS1tU4yH6cF0eA2bM4nO5pR7sT9uV1wX3yZ5aCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKl
   expiration: 86400000
+

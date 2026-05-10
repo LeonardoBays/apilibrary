@@ -3,6 +3,7 @@ package br.leo.library.security
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
@@ -12,6 +13,8 @@ import org.springframework.web.filter.OncePerRequestFilter
 class JwtAuthenticationFilter(
     private val jwtProvider: JwtProvider
 ) : OncePerRequestFilter() {
+
+    private val logger = LoggerFactory.getLogger(JwtAuthenticationFilter::class.java)
 
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -33,6 +36,11 @@ class JwtAuthenticationFilter(
                 authentication.details = userId
 
                 SecurityContextHolder.getContext().authentication = authentication
+
+                logger.info(
+                    "✓ Authenticated request | User: {} | Method: {} | Path: {} | User ID: {}",
+                    email, request.method, request.requestURI, userId
+                )
             }
         } catch (ex: Exception) {
             logger.error("Cannot set user authentication", ex)
@@ -50,4 +58,6 @@ class JwtAuthenticationFilter(
         }
     }
 }
+
+
 

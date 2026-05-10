@@ -1,5 +1,6 @@
 package br.leo.library.config
 
+import br.leo.library.security.HttpLoggingFilter
 import br.leo.library.security.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -13,7 +14,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class WebSecurityConfig(
-    private val jwtAuthenticationFilter: JwtAuthenticationFilter
+    private val jwtAuthenticationFilter: JwtAuthenticationFilter,
+    private val httpLoggingFilter: HttpLoggingFilter
 ) {
 
     @Bean
@@ -36,6 +38,7 @@ class WebSecurityConfig(
                     .anyRequest().authenticated()
             }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterAfter(httpLoggingFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }
